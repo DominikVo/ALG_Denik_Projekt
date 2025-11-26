@@ -1,16 +1,17 @@
-﻿namespace ALG_Projekt_Denik;
+﻿// csharp
+namespace ALG_Projekt_Denik;
 
 public class LinkList
 {
     private Node? Item;
     private int Count;
-    
+
     public LinkList()
     {
         Item = null;
         Count = 0;
     }
-    
+
     public void Add(Data data)
     {
         Node newNode = new Node(data);
@@ -31,6 +32,46 @@ public class LinkList
         Count++;
     }
 
+    // Inserts a new node after the provided node.
+    // If 'after' is null and the list is empty, the new node becomes the head.
+    // If 'after' is null and the list is not empty, the new node is appended to the end.
+    // Returns the created node.
+    public Node InsertAfter(Node? after, Data data)
+    {
+        Node newNode = new Node(data);
+
+        if (Item == null)
+        {
+            // empty list -> new head
+            Item = newNode;
+        }
+        else if (after == null)
+        {
+            // no specified node -> append to end
+            Node current = Item;
+            while (current.Next != null)
+            {
+                current = current.Next;
+            }
+            current.Next = newNode;
+            newNode.Previous = current;
+        }
+        else
+        {
+            // insert after the given node
+            newNode.Next = after.Next;
+            newNode.Previous = after;
+            after.Next = newNode;
+            if (newNode.Next != null)
+            {
+                newNode.Next.Previous = newNode;
+            }
+        }
+
+        Count++;
+        return newNode;
+    }
+
     public void Remove(Data data)
     {
         if(Item == null) return;
@@ -46,7 +87,7 @@ public class LinkList
             Count--;
             return;
         }
-        
+
         Node? current = Item;
         while (current?.Next != null)
         {
@@ -76,19 +117,19 @@ public class LinkList
         Console.WriteLine("Text: ");
         Console.WriteLine(Item.Data.Content);
     }
-    
+
     public Node? GetFirstNode()
     {
         return Item;
     }
-    
+
     public Node? GetLastNode()
     {
         if (Item == null)
         {
             return null;
         }
-        
+
         Node current = Item;
         while (current.Next != null)
         {
@@ -96,7 +137,7 @@ public class LinkList
         }
         return current;
     }
-    
+
     public int GetCount()
     {
         return Count;

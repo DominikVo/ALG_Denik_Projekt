@@ -6,6 +6,8 @@ namespace ALG_Projekt_Denik;
 
 public static class FileHandler
 {
+    public static List<String> FilePaths = new List<string>();
+
     public static void SaveToFile(LinkList denik, string filePath)
     {
         List<Data> dataList = new List<Data>();
@@ -57,15 +59,21 @@ public static class FileHandler
     
     public static void PrintAllFilesInDirectory(string directoryPath)
     {
+        FilePaths = Directory.GetFiles(directoryPath, "*.json", SearchOption.AllDirectories).ToList();
         if (!Directory.Exists(directoryPath))
         {
             Console.WriteLine("Adresář neexistuje.");
             return;
         }
 
-        string[] files = Directory.GetFiles(directoryPath);
+        string[] files = Directory.GetFiles(directoryPath, "*.json", SearchOption.AllDirectories);
         Console.WriteLine("Soubory v adresáři:");
         foreach (string file in files)
+        {
+            FilePaths.Add(file);
+        }
+        
+        foreach (string file in FilePaths)
         {
             Console.WriteLine(Path.GetFileName(file));
         }

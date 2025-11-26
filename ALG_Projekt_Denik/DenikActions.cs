@@ -1,4 +1,5 @@
-﻿namespace ALG_Projekt_Denik;
+﻿// csharp
+namespace ALG_Projekt_Denik;
 
 public static class DenikActions
 {
@@ -30,9 +31,34 @@ public static class DenikActions
     {
         Console.WriteLine("Zadejte text nového záznamu:");
         string content = Console.ReadLine() ?? "";
-        Data data = new Data(content, DateTime.Now);
-        Program.DefaultDenik.Add(data);
-        Program.CurrentNode = Program.DefaultDenik.GetLastNode();
+
+        DateTime parsedDate;
+        Console.WriteLine("Zadejte datum: (dd/MM/yyyy) nebo ponechte prázdné pro dnešní datum:");
+        string input = Console.ReadLine()?.Trim();
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            parsedDate = DateTime.Now;
+        }
+        else
+        {
+            string[] format = {"dd/MM/yyyy", "d/M/yyyy", "dd/M/yyyy", "d/MM/yyyy", "dd-MM-yyyy", "d-M-yyyy"};
+            while (!DateTime.TryParseExact(input, format, null, System.Globalization.DateTimeStyles.None, out parsedDate))
+            {
+                Console.WriteLine("Neplatný formát data. Zadejte prosím znovu datum (dd/MM/yyyy) nebo ponechte prázdné pro dnešní datum:");
+                input = Console.ReadLine()?.Trim();
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    parsedDate = DateTime.Now;
+                    break;
+                }
+            }
+        }
+
+        Data data = new Data(content, parsedDate);
+        // insert after current node (or create head / append if CurrentNode is null)
+        Node newNode = Program.DefaultDenik.InsertAfter(Program.CurrentNode, data);
+        Program.CurrentNode = newNode;
     }
 
     public static void SaveEntry()
@@ -45,10 +71,14 @@ public static class DenikActions
     {
         if (Program.CurrentNode != null)
         {
-            Node nodeToRemove = Program.CurrentNode;
-            Program.CurrentNode = nodeToRemove.Previous ?? nodeToRemove.Next;
-            Program.DefaultDenik.Remove(nodeToRemove.Data);
-            Console.WriteLine("Záznam byl smazán.");
+            Console.WriteLine("Chcete smazat tuto stránku\n>");
+            if (Console.ReadKey().Key == ConsoleKey.Delete)
+            {
+                Node nodeToRemove = Program.CurrentNode;
+                Program.CurrentNode = nodeToRemove.Previous ?? nodeToRemove.Next;
+                Program.DefaultDenik.Remove(nodeToRemove.Data);
+                Console.WriteLine("Záznam byl smazán.");    
+            }
         }
         else
         {

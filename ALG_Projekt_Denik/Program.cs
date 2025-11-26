@@ -82,4 +82,10 @@ class Program
     {
         Console.Clear();
     }
+
+    private static void ShowDiaries()
+    {
+        FileHandler.PrintAllFilesInDirectory("");
+    }
+    
 }
