@@ -31,23 +31,17 @@ public class LinkList
         }
         Count++;
     }
-
-    // Inserts a new node after the provided node.
-    // If 'after' is null and the list is empty, the new node becomes the head.
-    // If 'after' is null and the list is not empty, the new node is appended to the end.
-    // Returns the created node.
+    
     public Node InsertAfter(Node? after, Data data)
     {
         Node newNode = new Node(data);
 
         if (Item == null)
         {
-            // empty list -> new head
             Item = newNode;
         }
         else if (after == null)
         {
-            // no specified node -> append to end
             Node current = Item;
             while (current.Next != null)
             {
@@ -58,7 +52,6 @@ public class LinkList
         }
         else
         {
-            // insert after the given node
             newNode.Next = after.Next;
             newNode.Previous = after;
             after.Next = newNode;

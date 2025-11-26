@@ -56,7 +56,6 @@ public static class DenikActions
         }
 
         Data data = new Data(content, parsedDate);
-        // insert after current node (or create head / append if CurrentNode is null)
         Node newNode = Program.DefaultDenik.InsertAfter(Program.CurrentNode, data);
         Program.CurrentNode = newNode;
     }
