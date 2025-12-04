@@ -56,7 +56,6 @@ public static class FileHandler
             File.Delete(filePath);
         }
     }
-    
     public static void PrintAllFilesInDirectory(string directoryPath)
     {
         FilePaths = Directory.GetFiles(directoryPath, "*.json", SearchOption.AllDirectories).ToList();

@@ -42,7 +42,7 @@ public static class DenikActions
         }
         else
         {
-            string[] format = {"dd/MM/yyyy", "d/M/yyyy", "dd/M/yyyy", "d/MM/yyyy", "dd-MM-yyyy", "d-M-yyyy"};
+            string[] format = {"dd/MM/yyyy", "d/M/yyyy", "dd/M/yyyy", "d/MM/yyyy", "dd-MM-yyyy", "d-M-yyyy", "dd.M.yyyy", "d.M.yyyy", "dd.MM.yyyy", "d.MM.yyyy"};
             while (!DateTime.TryParseExact(input, format, null, System.Globalization.DateTimeStyles.None, out parsedDate))
             {
                 Console.WriteLine("Neplatný formát data. Zadejte prosím znovu datum (dd/MM/yyyy) nebo ponechte prázdné pro dnešní datum:");

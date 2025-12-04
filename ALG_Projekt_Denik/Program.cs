@@ -1,5 +1,11 @@
 ﻿namespace ALG_Projekt_Denik;
 
+enum Mode
+{
+    VIEWEntry,
+    VIEWDeniks
+}
+
 class Program
 {
     public static bool Running = true;
